@@ -1,6 +1,7 @@
+import PubSub from 'pubsub-js';
 import Ship from './ship';
 
-const Gameboard = () => {
+const Gameboard = (isComputer = false) => {
 	const cell = (coordinates, ship = null) => {
 		return {
 			coordinates,
@@ -8,16 +9,28 @@ const Gameboard = () => {
 			state: ship ? 'ship' : 'sea',
 
 			receiveAttack() {
+				// console.log(this.coordinates);
 				if (this.isHit()) {
-					// pubSub.publish('attackedYetHitCell', this.coordinates);
+					PubSub.publish(
+						'Tried Attack Yet Hit Cell',
+						this.coordinates
+					);
 				}
 				if (this.state == 'sea') {
 					this.state = 'hit-sea';
-					// pubSub.publish('attackedSea', this.coordinates);
+					PubSub.publish('Attacked Sea', {
+						coordinates: this.coordinates,
+						gameboard: this.gameboard,
+					});
 				}
 				if (this.state == 'ship') {
 					this.state = 'hit-ship';
-					// pubSub.publish('attackedShip', this.coordinates);
+					this.ship.hit();
+
+					PubSub.publish('Attacked Ship', {
+						coordinates: this.coordinates,
+						gameboard: this.gameboard,
+					});
 				}
 			},
 
@@ -51,7 +64,8 @@ const Gameboard = () => {
 		}
 	}
 
-	return {
+	const gb = {
+		isComputer,
 		map,
 		ships: [],
 
@@ -62,7 +76,10 @@ const Gameboard = () => {
 		placeShip(length, startCoor, endCoor) {
 			// Position not vertical, not horizontal
 			if (startCoor[0] != endCoor[0] && startCoor[1] != endCoor[1]) {
-				// pubSub.publish('providedWrongShipPlacementCoordinates', {});
+				PubSub.publish('Provided Wrong Ship Placement Coordinates', {
+					startCoor,
+					endCoor,
+				});
 				return;
 			}
 
@@ -82,6 +99,12 @@ const Gameboard = () => {
 			}
 
 			this.ships.push(ship);
+
+			PubSub.publish('Placed Ship', {
+				startCoor,
+				endCoor,
+				map: this.map,
+			});
 		},
 
 		receiveAttack(x, y) {
@@ -89,11 +112,19 @@ const Gameboard = () => {
 		},
 
 		allShipsHaveBeenSunk() {
-			this.ships.every((ship) => {
+			return this.ships.every((ship) => {
 				return ship.isSunk();
 			});
 		},
 	};
+
+	for (let i = 0; i < 10; i++) {
+		for (let j = 0; j < 10; j++) {
+			map[i][j].gameboard = gb;
+		}
+	}
+
+	return gb;
 };
 
 export default Gameboard;

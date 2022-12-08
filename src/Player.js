@@ -1,14 +1,14 @@
 import Gameboard from './Gameboard';
 
-const Player = (opponentGb = null, isComputer) => {
+const Player = (gameboard, opponentGb = null, isComputer) => {
 	return {
+		gameboard,
 		opponentGb,
 		isComputer,
-		gameboard: Gameboard(),
 
 		attack(x, y) {
 			if (this.isComputer) {
-				const coordinates = computerCoor(this.opponentGb);
+				const coordinates = getComputerCoor(this.opponentGb);
 				x = coordinates.x;
 				y = coordinates.y;
 			}
@@ -22,7 +22,7 @@ const Player = (opponentGb = null, isComputer) => {
 	};
 };
 
-const computerCoor = (opponentGb) => {
+const getComputerCoor = (opponentGb) => {
 	let x = Math.floor(Math.random() * (9 + 1));
 	let y = Math.floor(Math.random() * (9 + 1));
 

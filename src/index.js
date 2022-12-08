@@ -1,9 +1,16 @@
 import Gameboard from './Gameboard.js';
+import DOMController from './DOMController.js';
+import Game from './Game.js';
 import './style.css';
 
-console.log('Start!');
+DOMController.suscribe();
 
-const gb = Gameboard();
-gb.placeShip(5, [1, 4], [1, 9]);
+const { player, computer, playCpuTurn } = Game();
 
-console.log(gb.map);
+document.querySelectorAll('.cmp-cell').forEach((cell) => {
+	cell.addEventListener('click', function () {
+		const coor = this.dataset.coor.split(',');
+		player.attack(coor[0], coor[1]);
+		playCpuTurn();
+	});
+});
