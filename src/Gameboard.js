@@ -116,6 +116,28 @@ const Gameboard = (isComputer = false) => {
 				return ship.isSunk();
 			});
 		},
+
+		render(htmlContainerID) {
+			const container = document.querySelector(`#${htmlContainerID}`);
+			container.innerHTML = '';
+
+			const cellClass = this.isComputer ? 'cmp-cell' : 'cell';
+
+			for (let i = 0; i < 10; i++) {
+				const row = document.createElement('div');
+
+				for (let j = 0; j < 10; j++) {
+					const cell = document.createElement('div');
+					cell.className = cellClass;
+					cell.id = `${cellClass}${i}-${j}`;
+					cell.dataset.coor = `${i},${j}`;
+
+					row.appendChild(cell);
+				}
+
+				container.appendChild(row);
+			}
+		},
 	};
 
 	for (let i = 0; i < 10; i++) {

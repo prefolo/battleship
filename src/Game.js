@@ -6,6 +6,9 @@ const Game = () => {
 	const playerGb = Gameboard();
 	const computerGb = Gameboard(true);
 
+	playerGb.render('gameboard-player-bx');
+	computerGb.render('gameboard-cmp-bx');
+
 	const player = Player(playerGb, computerGb);
 	const computer = Player(computerGb, playerGb, 1);
 
