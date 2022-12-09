@@ -1,6 +1,6 @@
 import Gameboard from './Gameboard';
 
-const Player = (gameboard, opponentGb = null, isComputer) => {
+const Player = (gameboard, opponentGb, isComputer) => {
 	return {
 		gameboard,
 		opponentGb,
@@ -13,11 +13,7 @@ const Player = (gameboard, opponentGb = null, isComputer) => {
 				y = coordinates.y;
 			}
 
-			this.opponentGb.receiveAttack(x, y);
-		},
-
-		setOpponentGameboard(opponentGb) {
-			this.opponentGb = opponentGb;
+			return this.opponentGb.receiveAttack(x, y);
 		},
 	};
 };

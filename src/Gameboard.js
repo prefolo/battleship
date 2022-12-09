@@ -15,6 +15,8 @@ const Gameboard = (isComputer = false) => {
 						'Tried Attack Yet Hit Cell',
 						this.coordinates
 					);
+
+					return true;
 				}
 				if (this.state == 'sea') {
 					this.state = 'hit-sea';
@@ -108,7 +110,7 @@ const Gameboard = (isComputer = false) => {
 		},
 
 		receiveAttack(x, y) {
-			this.map[x][y].receiveAttack();
+			return this.map[x][y].receiveAttack();
 		},
 
 		allShipsHaveBeenSunk() {

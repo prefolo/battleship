@@ -5,12 +5,4 @@ import './style.css';
 
 DOMController.suscribe();
 
-const { player, computer, playCpuTurn } = Game();
-
-document.querySelectorAll('.cmp-cell').forEach((cell) => {
-	cell.addEventListener('click', function () {
-		const coor = this.dataset.coor.split(',');
-		player.attack(coor[0], coor[1]);
-		playCpuTurn();
-	});
-});
+Game();

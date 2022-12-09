@@ -2,6 +2,29 @@ import Gameboard from './Gameboard';
 import Player from './Player';
 import PubSub from 'pubsub-js';
 
+const makeCpuGameboardClickable = (player, computer) => {
+	document.querySelectorAll('.cmp-cell').forEach((cell) => {
+		cell.addEventListener('click', function () {
+			const coor = this.dataset.coor.split(',');
+
+			const thisCellIsYetHit = player.attack(coor[0], coor[1]);
+			if (thisCellIsYetHit) return;
+
+			if (computer.gameboard.allShipsHaveBeenSunk()) {
+				PubSub.publish('Player won', {});
+				return;
+			}
+
+			computer.attack();
+
+			if (player.gameboard.allShipsHaveBeenSunk()) {
+				PubSub.publish('Computer won', {});
+				return;
+			}
+		});
+	});
+};
+
 const Game = () => {
 	const playerGb = Gameboard();
 	const computerGb = Gameboard(true);
@@ -24,24 +47,7 @@ const Game = () => {
 	computerGb.placeShip(4, [2, 0], [5, 0]);
 	computerGb.placeShip(3, [2, 5], [2, 7]);
 
-	return {
-		player,
-		computer,
-
-		playCpuTurn() {
-			if (computer.gameboard.allShipsHaveBeenSunk()) {
-				PubSub.publish('Player won', {});
-				return;
-			}
-
-			computer.attack();
-
-			if (player.gameboard.allShipsHaveBeenSunk()) {
-				PubSub.publish('Computer won', {});
-				return;
-			}
-		},
-	};
+	makeCpuGameboardClickable(player, computer);
 };
 
 export default Game;
