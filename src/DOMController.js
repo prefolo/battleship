@@ -2,13 +2,11 @@ import PubSub from 'pubsub-js';
 
 let isSubscribed = false;
 
-const showDeniedAttackDialogBox = (msg, coordinates) => {
+const showDeniedAttackDialog = (msg, coordinates) => {
 	alert(`Denied attack : the cell ${coordinates} is yet hit.`);
 };
 
 const markAttackedSea = (msg, { coordinates, gameboard }) => {
-	console.log('markAttackedSea', { coordinates, gameboard });
-
 	const cell = gameboard.isComputer ? '#cmp-cell' : '#cell';
 
 	document.querySelector(
@@ -17,8 +15,6 @@ const markAttackedSea = (msg, { coordinates, gameboard }) => {
 };
 
 const markAttackedShip = (msg, { coordinates, gameboard }) => {
-	console.log('markAttackedShip', { coordinates, gameboard });
-
 	const cell = gameboard.isComputer ? '#cmp-cell' : '#cell';
 
 	document.querySelector(
@@ -26,9 +22,9 @@ const markAttackedShip = (msg, { coordinates, gameboard }) => {
 	).textContent = 'O';
 };
 
-const showWrongShipPlacementCoordinatesDialogBox = (msg, coorPair) => {
+const showWrongShipPlacementDialog = (msg, coorPair) => {
 	alert(
-		`Wrong ship placement at: ${coorPair.startCoor} - ${coorPair.endCoor}.`
+		`The ship can not be placed at: ${coorPair.startCoor} - ${coorPair.endCoor}.`
 	);
 };
 
@@ -43,11 +39,11 @@ const drawPlacedShip = (msg, data) => {
 	}
 };
 
-const showPlayerWonDialogBox = () => {
+const showPlayerWonDialog = () => {
 	alert('Player Won!');
 };
 
-const showComputerWonDialogBox = () => {
+const showComputerWonDialog = () => {
 	alert('Computer Won!');
 };
 
@@ -55,19 +51,16 @@ const DOMController = {
 	suscribe() {
 		if (isSubscribed) return;
 
-		PubSub.subscribe(
-			'Tried Attack Yet Hit Cell',
-			showDeniedAttackDialogBox
-		);
+		PubSub.subscribe('Tried Attack Yet Hit Cell', showDeniedAttackDialog);
 		PubSub.subscribe('Attacked Sea', markAttackedSea);
 		PubSub.subscribe('Attacked Ship', markAttackedShip);
 		PubSub.subscribe(
-			'Provided Wrong Ship Placement Coordinates',
-			showWrongShipPlacementCoordinatesDialogBox
+			'Illegal ship placement',
+			showWrongShipPlacementDialog
 		);
 		PubSub.subscribe('Placed Ship', drawPlacedShip);
-		PubSub.subscribe('Player won', showPlayerWonDialogBox);
-		PubSub.subscribe('Computer won', showComputerWonDialogBox);
+		PubSub.subscribe('Player won', showPlayerWonDialog);
+		PubSub.subscribe('Computer won', showComputerWonDialog);
 
 		isSubscribed = true;
 	},
