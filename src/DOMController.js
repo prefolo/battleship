@@ -58,7 +58,7 @@ const DOMController = {
 			'Illegal ship placement',
 			showWrongShipPlacementDialog
 		);
-		PubSub.subscribe('Placed Ship', drawPlacedShip);
+		PubSub.subscribe('Placed Ship In Gb', drawPlacedShip);
 		PubSub.subscribe('Player won', showPlayerWonDialog);
 		PubSub.subscribe('Computer won', showComputerWonDialog);
 
