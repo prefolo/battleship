@@ -7,8 +7,12 @@ const len_count = [
 	[6, 1],
 ];
 
+let Singleton = null;
+
 const Dock = () => {
-	return {
+	if (Singleton) return Singleton;
+
+	Singleton = {
 		render(htmlContainerID) {
 			const container = document.querySelector(`#${htmlContainerID}`);
 
@@ -23,6 +27,7 @@ const Dock = () => {
 				shipBox.id = `shipLen${item[0]}`;
 
 				const countBox = document.createElement('span');
+				countBox.id = `shipCount${item[0]}`;
 				countBox.textContent = `x ${item[1]}`;
 
 				row.appendChild(shipBox);
@@ -36,7 +41,28 @@ const Dock = () => {
 				ShipInDock(item[0]).render(`shipLen${item[0]}`);
 			}
 		},
+
+		decrementShipCount(shipLength) {
+			for (const item of len_count) {
+				if (item[0] == shipLength) {
+					item[1]--;
+
+					document.querySelector(
+						`#shipCount${item[0]}`
+					).textContent = `x ${item[1]}`;
+
+					if (item[1] == 0) {
+						document
+							.querySelector(`#shipLen${item[0]}`)
+							.firstChild.setAttribute('draggable', 'false');
+					}
+					break;
+				}
+			}
+		},
 	};
+
+	return Singleton;
 };
 
 export default Dock;

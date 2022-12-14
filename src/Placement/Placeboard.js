@@ -1,4 +1,4 @@
-import ShipInDock from './ShipInDock';
+import Dock from './Dock';
 import ShipInPboard from './ShipInPboard';
 import Cell from '../Cell';
 import Ship from '../Ship';
@@ -108,10 +108,13 @@ const drop_handler = (ev) => {
 			firstBlockCoor[0] * 26
 		);
 
-		// 3. Set dataset.coor to blocks of DOM ship
+		// 3. Decrement the  ship count in the dock
+		Dock().decrementShipCount(length);
+
+		// 4. Set dataset.coor to blocks of DOM ship
 		setDatasetCoor(shipHTMLid, firstBlockCoor, direction);
 
-		// 4. link shipInPboard.id -> ship
+		// 5. link shipInPboard.id -> ship
 		placeboard.ships[shipHTMLid] = shipSucessfullyStored;
 	}
 
