@@ -100,7 +100,7 @@ const drop_handler = (ev) => {
 
 		if (!shipSucessfullyStored) return;
 
-		// 2. render in DOM #placeboard
+		// 2. Render in DOM #placeboard
 		const shipHTMLid = ShipInPboard(length).render(
 			'placeboard',
 			firstBlockCoor[1] * 26,
@@ -113,8 +113,13 @@ const drop_handler = (ev) => {
 		// 4. Set dataset.coor to blocks of DOM ship
 		setDatasetCoor(shipHTMLid, firstBlockCoor, direction);
 
-		// 5. link shipInPboard.id -> ship
+		// 5. Link shipInPboard.id -> ship
 		placeboard.ships[shipHTMLid] = shipSucessfullyStored;
+
+		// 6. on double click on ship -> rotate ship
+		document
+			.querySelector('#' + shipHTMLid)
+			.addEventListener('dblclick', rotateShip);
 	}
 
 	if (isShipInPboard) {
@@ -159,6 +164,41 @@ const drop_handler = (ev) => {
 		setDatasetCoor(id, firstBlockCoor, direction);
 	}
 };
+
+function rotateShip() {
+	const ship = placeboard.ships[this.id];
+	const oldCoor = ship.coor;
+	const grabbedBlockIndex = 0;
+	const length = ship.length;
+
+	let direction = 'v';
+	if (this.style.display == 'block') direction = 'h';
+
+	removeShipFromMap(ship);
+
+	// store new placement
+	const firstBlockCoor = oldCoor.startCoor;
+
+	const shipSucessfullyStored = storePlacementInMap(
+		length,
+		firstBlockCoor,
+		getEndBlockCoor(length, firstBlockCoor, direction),
+		ship
+	);
+
+	// if new placement is wrong -> restore old placement and return
+	if (!shipSucessfullyStored) {
+		storePlacementInMap(length, oldCoor.startCoor, oldCoor.endCoor, ship);
+		return;
+	}
+
+	// if new placement is ok -> set new direction of the ship in the grid DOM
+
+	this.style.display = direction == 'h' ? 'flex' : 'block';
+
+	// Set dataset.coor to blocks of DOM ship
+	setDatasetCoor(this.id, firstBlockCoor, direction);
+}
 
 const setDatasetCoor = (id, startCoor, direction) => {
 	Array.from(document.querySelector('#' + id).children).forEach(

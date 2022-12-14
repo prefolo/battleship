@@ -31,17 +31,14 @@ const ShipInDock = (length) => {
 };
 
 const dragstart_handler = (ev, length) => {
-	console.log({ length });
-	const grabbedBlockIndex = parseInt(ev.offsetX / 26);
+	const data = {
+		length,
+		direction: 'h',
+		isShipInDock: true,
+		grabbedBlockIndex: parseInt(ev.offsetX / 26),
+	};
 
-	ev.dataTransfer.setData(
-		'text',
-		'{"length":"' +
-			length +
-			'","direction":"h","isShipInDock":"true","grabbedBlockIndex":"' +
-			grabbedBlockIndex +
-			'"}'
-	);
+	ev.dataTransfer.setData('text', JSON.stringify(data));
 };
 
 export default ShipInDock;

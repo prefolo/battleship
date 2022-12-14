@@ -38,18 +38,23 @@ const ShipInPboard = (length) => {
 };
 
 const dragstart_handler = (ev, length, id) => {
-	const grabbedBlockIndex = parseInt(ev.offsetX / 26);
+	let direction = 'h';
+	let grabbedBlockIndex = parseInt(ev.offsetX / 26);
 
-	ev.dataTransfer.setData(
-		'text',
-		'{"length":"' +
-			length +
-			'","id":"' +
-			id +
-			'","direction":"h","isShipInPboard":"true","grabbedBlockIndex":"' +
-			grabbedBlockIndex +
-			'"}'
-	);
+	if (ev.target.style.display == 'block') {
+		direction = 'v';
+		grabbedBlockIndex = parseInt(ev.offsetY / 26);
+	}
+
+	const data = {
+		length,
+		id,
+		direction,
+		isShipInPboard: true,
+		grabbedBlockIndex,
+	};
+
+	ev.dataTransfer.setData('text', JSON.stringify(data));
 };
 
 export default ShipInPboard;

@@ -1,10 +1,10 @@
 import ShipInDock from './ShipInDock';
 
 const len_count = [
-	[2, 4],
-	[3, 3],
-	[4, 2],
-	[6, 1],
+	[4, 1],
+	[3, 2],
+	[2, 3],
+	[1, 4],
 ];
 
 let Singleton = null;
