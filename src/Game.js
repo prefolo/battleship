@@ -53,22 +53,20 @@ const start = () => {
 	makeCpuGameboardClickable(player, computer);
 };
 
-const createResetButton = (htmlContainerID) => {
-	const button = document.createElement('button');
-	button.textContent = 'Reset';
+const addEventListenerToResetButton = () => {
+	const button = document.querySelector('#resetButton');
 
 	button.addEventListener('click', () => {
 		Dock().reset();
 		Placeboard().reset();
 	});
-
-	document.querySelector('#' + htmlContainerID).appendChild(button);
 };
 
 const Game = () => {
-	Placeboard().render('gameboard-cmp-bx');
-	Dock().render('ships-bx');
-	createResetButton('player-bx');
+	Placeboard().render('pboard-bx');
+	Dock().render('dock-bx');
+
+	addEventListenerToResetButton();
 };
 
 export default Game;

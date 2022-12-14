@@ -8,17 +8,31 @@
     <body>
         <div id="header">Battleship</div>
         <div id="content">
-            <div id="computer-bx">
-                <div class="title">Computer</div>
-                <div class="gameboard-bx" id="gameboard-cmp-bx">
+            <div class="screen" id="game-screen" style="display:none;">
+                <div id="computer-bx">
+                    <div class="title">Computer</div>
+                    <div class="board-bx" id="gameboard-cmp-bx">
+                    </div>
+                </div>
+                <div id="player-bx">
+                    <div class="title">Player</div>
+                    <div class="board-bx" id="gameboard-player-bx">
+                    </div>
                 </div>
             </div>
-            <div id="player-bx">
-                <div class="title">Player</div>
-                <div class="gameboard-bx" id="gameboard-player-bx">
+            <div id="placement-screen">
+                <div class="screen">
+                    <div class="board-bx" id="pboard-bx">
+
+                    </div>
+                    <div id="dock-bx">
+
+                    </div>
                 </div>
-            </div>
-            <div id="ships-bx">
+                <div id="buttons-bx">
+                    <button id="resetBtn">Reset</button>
+                    <button id="startBtn" disabled>Start</button>
+                </div>
             </div>
         </div>
         <div id="footer">Copyright © 2022 prefolo</div>
