@@ -88,7 +88,13 @@ const Placeboard = () => {
 			this.render(this.htmlContainerID);
 		},
 
-		getShipPlacements() {},
+		getShipPlacements() {
+			for (const key in this.ships) {
+				console.log(this.ships[key])
+				// const coor = this.ships[key].coor;
+				// Gameboard().placeShip(length, coor.startCoor, coor.endCoor)
+			}
+		},
 	};
 
 	return placeboard;

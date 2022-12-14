@@ -64,11 +64,20 @@ const addEventListenerToResetButton = () => {
 	});
 };
 
+const addEventListenerToStartButton = () => {
+	const button = document.querySelector('#startBtn');
+
+	button.addEventListener('click', () => {
+		Placeboard().getShipPlacements();
+	});
+};
+
 const Game = () => {
 	Placeboard().render('pboard-bx');
 	Dock().render('dock-bx');
 
 	addEventListenerToResetButton();
+	addEventListenerToStartButton();
 };
 
 export default Game;
