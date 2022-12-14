@@ -84,6 +84,7 @@ const Placeboard = () => {
 			}
 
 			this.map = map;
+			this.ships = {};
 			this.render(this.htmlContainerID);
 		},
 
