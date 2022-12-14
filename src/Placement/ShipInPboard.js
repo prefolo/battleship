@@ -1,6 +1,6 @@
 let num = 0;
 
-const ShipInGrid = (length) => {
+const ShipInPboard = (length) => {
 	return {
 		length,
 
@@ -10,7 +10,7 @@ const ShipInGrid = (length) => {
 			const frame = document.createElement('div');
 			frame.style = `display:flex;position:absolute;z-index:1;left:${x}px;top:${y}px`;
 
-			frame.id = `shipInGrid${num}`;
+			frame.id = `shipInPboard${num}`;
 			num++;
 
 			frame.draggable = 'true';
@@ -46,10 +46,10 @@ const dragstart_handler = (ev, length, id) => {
 			length +
 			'","id":"' +
 			id +
-			'","direction":"h","isShipInGrid":"true","grabbedBlockIndex":"' +
+			'","direction":"h","isShipInPboard":"true","grabbedBlockIndex":"' +
 			grabbedBlockIndex +
 			'"}'
 	);
 };
 
-export default ShipInGrid;
+export default ShipInPboard;

@@ -1,8 +1,9 @@
 import Gameboard from './Gameboard';
 import Player from './Player';
 import PubSub from 'pubsub-js';
-import Placeboard from './Placeboard';
-import PlaceholderShip from './PlaceholderShip';
+import Placeboard from './Placement/Placeboard';
+import ShipInDock from './Placement/ShipInDock';
+import Dock from './Placement/Dock';
 
 const makeCpuGameboardClickable = (player, computer) => {
 	document.querySelectorAll('.cmp-cell').forEach((cell) => {
@@ -54,7 +55,7 @@ const start = () => {
 
 const Game = () => {
 	Placeboard().render('gameboard-cmp-bx');
-	PlaceholderShip(3).render('ships-bx');
+	Dock().render('ships-bx');
 };
 
 export default Game;

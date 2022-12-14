@@ -4,16 +4,6 @@
         <title>Battleship</title>
         <meta charset="utf-8">
         <script src="bundle.js" defer></script>
-        <script>
-            function drag(ev) {
-                const grabbedBlockIndex = parseInt(ev.offsetY/28);
-                ev.dataTransfer.setData("text", '{"length":"3","direction":"v","grabbedBlockIndex":"'+ grabbedBlockIndex +'"}');
-            }
-            function drag2(ev) {
-                    const grabbedBlockIndex = parseInt(ev.offsetX / 28);
-                    ev.dataTransfer.setData("text", '{"length":"4","direction":"h","grabbedBlockIndex":"' + grabbedBlockIndex + '"}');
-            }
-        </script>
     </head>
     <body>
         <div id="header">Battleship</div>
@@ -29,19 +19,6 @@
                 </div>
             </div>
             <div id="ships-bx">
-                <div style="display:none">
-                    <div style="" draggable="true" ondragstart="drag(event)">
-                        <div style="width:26px;height:26px;background-color: gray;border:1px solid #ddd;"></div>
-                        <div style="width:26px;height:26px;background-color: gray;border:1px solid #ddd;"></div>
-                        <div style="width:26px;height:26px;background-color: gray;border:1px solid #ddd;"></div>
-                    </div>
-                    <div style="display: flex;" draggable="true" ondragstart="drag2(event)">
-                        <div style="width:26px;height:26px;background-color: gray;border:1px solid #ddd;"></div>
-                        <div style="width:26px;height:26px;background-color: gray;border:1px solid #ddd;"></div>
-                        <div style="width:26px;height:26px;background-color: gray;border:1px solid #ddd;"></div>
-                        <div style="width:26px;height:26px;background-color: gray;border:1px solid #ddd;"></div>
-                    </div>
-                </div>
             </div>
         </div>
         <div id="footer">Copyright © 2022 prefolo</div>

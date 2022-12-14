@@ -1,15 +1,21 @@
-import PlaceholderShip from './PlaceholderShip';
-import ShipInGrid from './ShipInGrid';
-import Cell from './Cell';
-import Ship from './Ship';
+import ShipInDock from './ShipInDock';
+import ShipInPboard from './ShipInPboard';
+import Cell from '../Cell';
+import Ship from '../Ship';
 
 let placeboard = null;
 
 const Placeboard = () => {
 	const map = [
-		new Array(10), new Array(10), new Array(10),
-		new Array(10), new Array(10), new Array(10),
-		new Array(10), new Array(10), new Array(10),
+		new Array(10),
+		new Array(10),
+		new Array(10),
+		new Array(10),
+		new Array(10),
+		new Array(10),
+		new Array(10),
+		new Array(10),
+		new Array(10),
 		new Array(10),
 	];
 
@@ -71,15 +77,15 @@ const drop_handler = (ev) => {
 		length,
 		direction,
 		grabbedBlockIndex,
-		isPlaceholderShip,
-		isShipInGrid,
+		isShipInDock,
+		isShipInPboard,
 		id,
 	} = JSON.parse(ev.dataTransfer.getData('text'));
 
 	length *= 1;
 	grabbedBlockIndex *= 1;
 
-	if (isPlaceholderShip) {
+	if (isShipInDock) {
 		// 1. store in grid map
 		const firstBlockCoor = getFirstBlockCoor(
 			ev.target,
@@ -96,7 +102,7 @@ const drop_handler = (ev) => {
 		if (!shipSucessfullyStored) return;
 
 		// 2. render in DOM #placeboard
-		const shipHTMLid = ShipInGrid(length).render(
+		const shipHTMLid = ShipInPboard(length).render(
 			'placeboard',
 			firstBlockCoor[1] * 26,
 			firstBlockCoor[0] * 26
@@ -105,11 +111,11 @@ const drop_handler = (ev) => {
 		// 3. Set dataset.coor to blocks of DOM ship
 		setDatasetCoor(shipHTMLid, firstBlockCoor, direction);
 
-		// 4. link shipInGrid.id -> ship
+		// 4. link shipInPboard.id -> ship
 		placeboard.ships[shipHTMLid] = shipSucessfullyStored;
 	}
 
-	if (isShipInGrid) {
+	if (isShipInPboard) {
 		const ship = placeboard.ships[id];
 		const oldCoor = ship.coor;
 
@@ -185,7 +191,7 @@ const getEndBlockCoor = (length, firstBlockCoor, direction) => {
 */
 const checkPlacement = (length, startCoor, endCoor) => {
 	// Ship overflows the gamaboard -> return false
- 	if (startCoor.concat(endCoor).some((coor) => coor < 0)) return false;
+	if (startCoor.concat(endCoor).some((coor) => coor < 0)) return false;
 	if (startCoor.concat(endCoor).some((coor) => coor > 9)) return false;
 
 	let adjacentCoor = [];
@@ -193,10 +199,7 @@ const checkPlacement = (length, startCoor, endCoor) => {
 	// Ship is horizontal, check if overlaps other ships
 	if (startCoor[0] == endCoor[0]) {
 		for (let i = 0; i < length; i++) {
-			if (
-				placeboard.map[startCoor[0]][startCoor[1] + i].state ==
-				'ship'
-			)
+			if (placeboard.map[startCoor[0]][startCoor[1] + i].state == 'ship')
 				return false;
 
 			adjacentCoor.push([startCoor[0] - 1, startCoor[1] + i]);
@@ -206,10 +209,7 @@ const checkPlacement = (length, startCoor, endCoor) => {
 	// Ship is vertical, check if overlaps other ships
 	else if (startCoor[1] == endCoor[1]) {
 		for (let i = 0; i < length; i++) {
-			if (
-				placeboard.map[startCoor[0] + i][startCoor[1]].state ==
-				'ship'
-			)
+			if (placeboard.map[startCoor[0] + i][startCoor[1]].state == 'ship')
 				return false;
 
 			adjacentCoor.push([startCoor[0] + i, startCoor[1] - 1]);

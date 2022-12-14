@@ -1,4 +1,4 @@
-const PlaceholderShip = (length) => {
+const ShipInDock = (length) => {
 	return {
 		length,
 
@@ -37,10 +37,10 @@ const dragstart_handler = (ev, length) => {
 		'text',
 		'{"length":"' +
 			length +
-			'","direction":"h","isPlaceholderShip":"true","grabbedBlockIndex":"' +
+			'","direction":"h","isShipInDock":"true","grabbedBlockIndex":"' +
 			grabbedBlockIndex +
 			'"}'
 	);
 };
 
-export default PlaceholderShip;
+export default ShipInDock;
