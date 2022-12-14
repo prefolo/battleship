@@ -23,7 +23,8 @@ const ShipInPboard = (length) => {
 				const block = document.createElement('div');
 
 				block.style =
-					'width:24px;height:24px;background-color: gray;border:1px solid #ddd;';
+					'width:24px;height:24px;border-width:1px;border-style:solid';
+				block.className = 'shipBlock';
 
 				frame.appendChild(block);
 				length--;
@@ -37,7 +38,6 @@ const ShipInPboard = (length) => {
 };
 
 const dragstart_handler = (ev, length, id) => {
-	console.log({ length, id });
 	const grabbedBlockIndex = parseInt(ev.offsetX / 26);
 
 	ev.dataTransfer.setData(

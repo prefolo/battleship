@@ -26,6 +26,16 @@ body {
 	display: flex;
 	gap: 50px;
 }
+
+#footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+}
+
+/* Game */
+
 .title {
 	text-align: center;
 	padding: 20px;
@@ -44,9 +54,26 @@ body {
 	align-items: center;
 }
 
-#footer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 20px;
+/* Placement */
+
+#placeboard {
+	border: 1px solid #aaa;
+}
+
+.pboardCell {
+	border: 1px solid #fff;
+	background-color: #ecedff;
+}
+
+.shipBlock {
+	border-color: #656565;
+	background-color: #a8a8a8;
+}
+
+.undraggableDockedShip {
+	opacity: 0.5;
+}
+
+.dockCountBox {
+	color: #a8a8a8;
 }

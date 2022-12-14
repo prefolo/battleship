@@ -28,6 +28,7 @@ const Dock = () => {
 
 				const countBox = document.createElement('span');
 				countBox.id = `shipCount${item[0]}`;
+				countBox.className = 'dockCountBox';
 				countBox.textContent = `x ${item[1]}`;
 
 				row.appendChild(shipBox);
@@ -52,9 +53,12 @@ const Dock = () => {
 					).textContent = `x ${item[1]}`;
 
 					if (item[1] == 0) {
-						document
-							.querySelector(`#shipLen${item[0]}`)
-							.firstChild.setAttribute('draggable', 'false');
+						const dockedShip = document.querySelector(
+							`#shipLen${item[0]}`
+						).firstChild;
+
+						dockedShip.setAttribute('draggable', 'false');
+						dockedShip.className = 'undraggableDockedShip';
 					}
 					break;
 				}

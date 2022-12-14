@@ -34,8 +34,7 @@ const Placeboard = () => {
 			container.innerHTML = '';
 
 			const frame = document.createElement('div');
-			frame.style =
-				'position:relative;border:1px solid #000;width:260px;height:260px';
+			frame.style = 'position:relative;';
 			frame.id = 'placeboard';
 
 			frame.ondrop = drop_handler;
@@ -47,7 +46,7 @@ const Placeboard = () => {
 				for (let j = 0; j < 10; j++) {
 					const cell = document.createElement('div');
 
-					cell.className = 'cell';
+					cell.className = 'cell pboardCell';
 					cell.dataset.coor = `${j},${i}`;
 
 					row.appendChild(cell);

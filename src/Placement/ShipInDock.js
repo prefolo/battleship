@@ -18,7 +18,8 @@ const ShipInDock = (length) => {
 				const block = document.createElement('div');
 
 				block.style =
-					'width:26px;height:26px;background-color: gray;border:1px solid #ddd;';
+					'width:24px;height:24px;border-width:1px;border-style:solid';
+				block.className = 'shipBlock';
 
 				frame.appendChild(block);
 				length--;
