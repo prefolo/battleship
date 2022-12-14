@@ -1,20 +1,26 @@
 import ShipInDock from './ShipInDock';
 
-const len_count = [
+let len_count = [
 	[4, 1],
 	[3, 2],
 	[2, 3],
 	[1, 4],
 ];
 
+// Singleton Pattern
 let Singleton = null;
 
 const Dock = () => {
 	if (Singleton) return Singleton;
 
 	Singleton = {
+		htmlContainerID: null,
+
 		render(htmlContainerID) {
+			this.htmlContainerID = htmlContainerID;
+
 			const container = document.querySelector(`#${htmlContainerID}`);
+			container.innerHTML = '';
 
 			const frame = document.createElement('div');
 
@@ -63,6 +69,17 @@ const Dock = () => {
 					break;
 				}
 			}
+		},
+
+		reset() {
+			len_count = [
+				[4, 1],
+				[3, 2],
+				[2, 3],
+				[1, 4],
+			];
+
+			Singleton.render(this.htmlContainerID);
 		},
 	};
 

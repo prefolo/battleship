@@ -3,9 +3,12 @@ import ShipInPboard from './ShipInPboard';
 import Cell from '../Cell';
 import Ship from '../Ship';
 
+// Singleton Pattern
 let placeboard = null;
 
 const Placeboard = () => {
+	if (placeboard) return placeboard;
+
 	const map = [
 		new Array(10),
 		new Array(10),
@@ -25,13 +28,15 @@ const Placeboard = () => {
 		}
 	}
 
-	const thisPlaceboard = {
+	placeboard = {
 		ships: {},
 		map,
 
 		render(htmlContainerID) {
 			const container = document.querySelector(`#${htmlContainerID}`);
 			container.innerHTML = '';
+
+			this.htmlContainerID = container.id;
 
 			const frame = document.createElement('div');
 			frame.style = 'position:relative;';
@@ -58,11 +63,34 @@ const Placeboard = () => {
 			container.appendChild(frame);
 		},
 
+		reset() {
+			const map = [
+				new Array(10),
+				new Array(10),
+				new Array(10),
+				new Array(10),
+				new Array(10),
+				new Array(10),
+				new Array(10),
+				new Array(10),
+				new Array(10),
+				new Array(10),
+			];
+
+			for (let i = 0; i < 10; i++) {
+				for (let j = 0; j < 10; j++) {
+					map[i][j] = Cell([i, j]);
+				}
+			}
+
+			this.map = map;
+			this.render(this.htmlContainerID);
+		},
+
 		getShipPlacements() {},
 	};
 
-	placeboard = thisPlaceboard;
-	return thisPlaceboard;
+	return placeboard;
 };
 
 const dragover_handler = (ev) => {
