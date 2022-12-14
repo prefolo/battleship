@@ -54,11 +54,13 @@ const start = () => {
 };
 
 const addEventListenerToResetButton = () => {
-	const button = document.querySelector('#resetButton');
+	const button = document.querySelector('#resetBtn');
 
 	button.addEventListener('click', () => {
 		Dock().reset();
 		Placeboard().reset();
+
+		document.querySelector('#startBtn').disabled = true;
 	});
 };
 

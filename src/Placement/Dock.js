@@ -69,6 +69,11 @@ const Dock = () => {
 					break;
 				}
 			}
+
+			let allShipsAreInPboard = len_count.every(
+				(len_count) => len_count[1] == 0
+			);
+			return allShipsAreInPboard;
 		},
 
 		reset() {

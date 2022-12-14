@@ -137,7 +137,10 @@ const drop_handler = (ev) => {
 		);
 
 		// 3. Decrement the  ship count in the dock
-		Dock().decrementShipCount(length);
+		const allShipsAreInPboard = Dock().decrementShipCount(length);
+
+		if (allShipsAreInPboard)
+			document.querySelector('#startBtn').disabled = false;
 
 		// 4. Set dataset.coor to blocks of DOM ship
 		setDatasetCoor(shipHTMLid, firstBlockCoor, direction);
