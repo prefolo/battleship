@@ -67,6 +67,11 @@ body {
 	align-items: center;
 }
 
+.playerGbShipCell {
+	border: 1px solid #656565;
+	background-color: #a8a8a8;
+}
+
 /* Placement */
 
 #placeboard {

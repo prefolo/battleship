@@ -2,8 +2,8 @@ import Gameboard from './Gameboard';
 import Player from './Player';
 import PubSub from 'pubsub-js';
 import Placeboard from './Placement/Placeboard';
-import ShipInDock from './Placement/ShipInDock';
 import Dock from './Placement/Dock';
+import { randomPlaceShips } from './Placement/PlacementUtils';
 
 const makeCpuGameboardClickable = (player, computer) => {
 	document.querySelectorAll('.cmp-cell').forEach((cell) => {
@@ -54,9 +54,7 @@ const start = () => {
 };
 
 const addEventListenerToResetButton = () => {
-	const button = document.querySelector('#resetBtn');
-
-	button.addEventListener('click', () => {
+	document.querySelector('#resetBtn').addEventListener('click', () => {
 		Dock().reset();
 		Placeboard().reset();
 
@@ -64,11 +62,9 @@ const addEventListenerToResetButton = () => {
 	});
 };
 
-const addEventListenerToStartButton = () => {
-	const button = document.querySelector('#startBtn');
-
-	button.addEventListener('click', () => {
-		Placeboard().getShipPlacements();
+const addEventListenerToStartButton = (gb) => {
+	document.querySelector('#startBtn').addEventListener('click', () => {
+		Placeboard().setShipPlacementsOnGb(gb);
 	});
 };
 
@@ -77,7 +73,27 @@ const Game = () => {
 	Dock().render('dock-bx');
 
 	addEventListenerToResetButton();
-	addEventListenerToStartButton();
+
+	//-----------------------------
+
+	const playerGb = Gameboard();
+	const computerGb = Gameboard(true);
+
+	playerGb.render('gameboard-player-bx');
+	computerGb.render('gameboard-cmp-bx');
+
+	const player = Player(playerGb, computerGb);
+	const computer = Player(computerGb, playerGb, 1);
+
+	addEventListenerToStartButton(playerGb);
+
+	/* computerGb.placeShip(2, [0, 0], [0, 1]);
+	computerGb.placeShip(3, [0, 3], [2, 3]);
+	computerGb.placeShip(4, [0, 6], [0, 9]);
+	computerGb.placeShip(4, [2, 0], [5, 0]);
+	computerGb.placeShip(3, [2, 5], [2, 7]); */
+
+	randomPlaceShips(computerGb);
 };
 
 export default Game;

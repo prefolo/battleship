@@ -29,12 +29,14 @@ const showWrongShipPlacementDialog = (msg, coorPair) => {
 };
 
 const drawPlacedShip = (msg, data) => {
+	const cell = data.gb.isComputer ? '#cmp-cell' : '#cell';
+
 	for (let i = 0; i < 10; i++) {
 		for (let j = 0; j < 10; j++) {
-			if (data.map[i][j].state == 'ship')
-				document.querySelector(
-					'#cell' + i + '-' + j
-				).style.backgroundColor = 'gray';
+			if (data.gb.map[i][j].state == 'ship')
+				document
+					.querySelector(cell + i + '-' + j)
+					.classList.add('playerGbShipCell');
 		}
 	}
 };

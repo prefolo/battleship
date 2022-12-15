@@ -1,7 +1,7 @@
 import Dock from './Dock';
 import ShipInPboard from './ShipInPboard';
 import Cell from '../Cell';
-import Ship from '../Ship';
+import { storePlacementInMap, getEndBlockCoor } from './PlacementUtils';
 
 // Singleton Pattern
 let placeboard = null;
@@ -88,11 +88,11 @@ const Placeboard = () => {
 			this.render(this.htmlContainerID);
 		},
 
-		getShipPlacements() {
+		setShipPlacementsOnGb(gb) {
 			for (const key in this.ships) {
-				console.log(this.ships[key])
-				// const coor = this.ships[key].coor;
-				// Gameboard().placeShip(length, coor.startCoor, coor.endCoor)
+				const ship = this.ships[key];
+				const coor = ship.coor;
+				gb.placeShip(ship.length, coor.startCoor, coor.endCoor);
 			}
 		},
 	};
@@ -128,6 +128,7 @@ const drop_handler = (ev) => {
 		);
 
 		const shipSucessfullyStored = storePlacementInMap(
+			placeboard,
 			length,
 			firstBlockCoor,
 			getEndBlockCoor(length, firstBlockCoor, direction)
@@ -174,6 +175,7 @@ const drop_handler = (ev) => {
 		);
 
 		const shipSucessfullyStored = storePlacementInMap(
+			placeboard,
 			length,
 			firstBlockCoor,
 			getEndBlockCoor(length, firstBlockCoor, direction),
@@ -183,6 +185,7 @@ const drop_handler = (ev) => {
 		// if new placement is wrong -> restore old placement and return
 		if (!shipSucessfullyStored) {
 			storePlacementInMap(
+				placeboard,
 				length,
 				oldCoor.startCoor,
 				oldCoor.endCoor,
@@ -218,6 +221,7 @@ function rotateShip() {
 	const firstBlockCoor = oldCoor.startCoor;
 
 	const shipSucessfullyStored = storePlacementInMap(
+		placeboard,
 		length,
 		firstBlockCoor,
 		getEndBlockCoor(length, firstBlockCoor, direction),
@@ -226,7 +230,13 @@ function rotateShip() {
 
 	// if new placement is wrong -> restore old placement and return
 	if (!shipSucessfullyStored) {
-		storePlacementInMap(length, oldCoor.startCoor, oldCoor.endCoor, ship);
+		storePlacementInMap(
+			placeboard,
+			length,
+			oldCoor.startCoor,
+			oldCoor.endCoor,
+			ship
+		);
 		return;
 	}
 
@@ -257,122 +267,6 @@ const getFirstBlockCoor = (cellRecevingDrop, grabbedBlockIndex, direction) => {
 	else coor[0] = coor[0] - grabbedBlockIndex;
 
 	return coor;
-};
-
-const getEndBlockCoor = (length, firstBlockCoor, direction) => {
-	let [y, x] = firstBlockCoor;
-
-	return direction == 'h' ? [y, x + length - 1] : [y + length - 1, x];
-};
-
-/*
-  @startCoor - [y:int,x:int]
-  @endCoor - [y:int,x:int]
-*/
-const checkPlacement = (length, startCoor, endCoor) => {
-	// Ship overflows the gamaboard -> return false
-	if (startCoor.concat(endCoor).some((coor) => coor < 0)) return false;
-	if (startCoor.concat(endCoor).some((coor) => coor > 9)) return false;
-
-	let adjacentCoor = [];
-
-	// Ship is horizontal, check if overlaps other ships
-	if (startCoor[0] == endCoor[0]) {
-		for (let i = 0; i < length; i++) {
-			if (placeboard.map[startCoor[0]][startCoor[1] + i].state == 'ship')
-				return false;
-
-			adjacentCoor.push([startCoor[0] - 1, startCoor[1] + i]);
-			adjacentCoor.push([startCoor[0] + 1, startCoor[1] + i]);
-		}
-	}
-	// Ship is vertical, check if overlaps other ships
-	else if (startCoor[1] == endCoor[1]) {
-		for (let i = 0; i < length; i++) {
-			if (placeboard.map[startCoor[0] + i][startCoor[1]].state == 'ship')
-				return false;
-
-			adjacentCoor.push([startCoor[0] + i, startCoor[1] - 1]);
-			adjacentCoor.push([startCoor[0] + i, startCoor[1] + 1]);
-		}
-	}
-
-	// Complete add adjacent cell coordinates to [adjacentCoor]
-
-	// Ship is horizontal, add 3 left and 3 right cell
-	if (startCoor[0] == endCoor[0]) {
-		const leftX = startCoor[1] - 1;
-		const startY = startCoor[0] - 1;
-
-		adjacentCoor = adjacentCoor.concat([
-			[startY, leftX],
-			[startY + 1, leftX],
-			[startY + 2, leftX],
-			[startY, leftX + length + 1],
-			[startY + 1, leftX + length + 1],
-			[startY + 2, leftX + length + 1],
-		]);
-	}
-
-	// Ship is vertical, add 3 top and 3 bottom cell
-	if (startCoor[1] == endCoor[1]) {
-		const topY = startCoor[0] - 1;
-		const startX = startCoor[1] - 1;
-
-		adjacentCoor = adjacentCoor.concat([
-			[topY, startX],
-			[topY, startX + 1],
-			[topY, startX + 2],
-			[topY + length + 1, startX],
-			[topY + length + 1, startX + 1],
-			[topY + length + 1, startX + 2],
-		]);
-	}
-
-	// Remove adjacent cells overflowing the gameboard
-	adjacentCoor = adjacentCoor.filter(
-		(coor) => coor[0] > -1 && coor[1] > -1 && coor[0] < 10 && coor[1] < 10
-	);
-
-	if (
-		adjacentCoor.some(
-			(coor) => placeboard.map[coor[0]][coor[1]].state == 'ship'
-		)
-	)
-		return false;
-
-	return true;
-};
-
-/*
-  @startCoor - [y:int,x:int]
-  @endCoor - [y:int,x:int]
-*/
-const storePlacementInMap = (length, startCoor, endCoor, ship) => {
-	const isPlacementLegal = checkPlacement(length, startCoor, endCoor);
-
-	if (!isPlacementLegal) {
-		return false;
-	}
-
-	if (!ship) ship = Ship(length);
-
-	// startX == endX => vertical position
-	if (startCoor[0] == endCoor[0]) {
-		for (let i = 0; i < ship.length; i++) {
-			placeboard.map[startCoor[0]][startCoor[1] + i].setShip(ship);
-		}
-	}
-	// startY == endY => horizontal position
-	else if (startCoor[1] == endCoor[1]) {
-		for (let i = 0; i < ship.length; i++) {
-			placeboard.map[startCoor[0] + i][startCoor[1]].setShip(ship);
-		}
-	}
-
-	ship.setCoor(startCoor, endCoor);
-
-	return ship;
 };
 
 const removeShipFromMap = (ship) => {

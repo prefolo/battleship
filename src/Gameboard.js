@@ -52,7 +52,7 @@ const Gameboard = (isComputer = false) => {
 			PubSub.publish('Placed Ship In Gb', {
 				startCoor,
 				endCoor,
-				map: this.map,
+				gb: gb,
 			});
 		},
 
