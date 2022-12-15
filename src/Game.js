@@ -64,7 +64,19 @@ const addEventListenerToResetButton = () => {
 
 const addEventListenerToStartButton = (gb) => {
 	document.querySelector('#startBtn').addEventListener('click', () => {
-		Placeboard().setShipPlacementsOnGb(gb);
+		Placeboard().setOwnShipPlacementsOnOtherGb(gb);
+		Dock().reset();
+		Placeboard().reset();
+
+		document.querySelector('#startBtn').disabled = true;
+	});
+};
+
+const addEventListenerToRandomButton = () => {
+	document.querySelector('#randomBtn').addEventListener('click', () => {
+		Placeboard().reset();
+		randomPlaceShips(Placeboard());
+		document.querySelector('#startBtn').disabled = false;
 	});
 };
 
@@ -86,12 +98,7 @@ const Game = () => {
 	const computer = Player(computerGb, playerGb, 1);
 
 	addEventListenerToStartButton(playerGb);
-
-	/* computerGb.placeShip(2, [0, 0], [0, 1]);
-	computerGb.placeShip(3, [0, 3], [2, 3]);
-	computerGb.placeShip(4, [0, 6], [0, 9]);
-	computerGb.placeShip(4, [2, 0], [5, 0]);
-	computerGb.placeShip(3, [2, 5], [2, 7]); */
+	addEventListenerToRandomButton();
 
 	randomPlaceShips(computerGb);
 };

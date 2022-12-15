@@ -1,7 +1,10 @@
 import Dock from './Dock';
 import ShipInPboard from './ShipInPboard';
 import Cell from '../Cell';
-import { storePlacementInMap, getEndBlockCoor } from './PlacementUtils';
+import {
+	checkPlace_returnStoredShipInMap,
+	getEndBlockCoor,
+} from './PlacementUtils';
 
 // Singleton Pattern
 let placeboard = null;
@@ -31,6 +34,7 @@ const Placeboard = () => {
 	placeboard = {
 		ships: {},
 		map,
+		isPlaceboard: true,
 
 		render(htmlContainerID) {
 			const container = document.querySelector(`#${htmlContainerID}`);
@@ -88,12 +92,41 @@ const Placeboard = () => {
 			this.render(this.htmlContainerID);
 		},
 
-		setShipPlacementsOnGb(gb) {
+		setOwnShipPlacementsOnOtherGb(gb) {
 			for (const key in this.ships) {
 				const ship = this.ships[key];
 				const coor = ship.coor;
 				gb.placeShip(ship.length, coor.startCoor, coor.endCoor);
 			}
+		},
+
+		drawShip(ship) {
+			const startCoor = ship.coor.startCoor;
+			const endCoor = ship.coor.endCoor;
+			const length = ship.length;
+			const direction = startCoor[0] == endCoor[0] ? 'h' : 'v';
+
+			// 1. Render in DOM #placeboard
+			const shipHTMLid = ShipInPboard(length).render(
+				'placeboard',
+				startCoor[1] * 26,
+				startCoor[0] * 26
+			);
+
+			if (direction == 'v')
+				document.querySelector('#' + shipHTMLid).style.display =
+					'block';
+
+			// 2. Set dataset.coor to blocks of DOM ship
+			setDatasetCoor(shipHTMLid, startCoor, direction);
+
+			// 3. Link shipInPboard.id -> ship
+			placeboard.ships[shipHTMLid] = ship;
+
+			// 4. on double click on ship -> rotate ship
+			document
+				.querySelector('#' + shipHTMLid)
+				.addEventListener('dblclick', rotateShip);
 		},
 	};
 
@@ -127,38 +160,22 @@ const drop_handler = (ev) => {
 			direction
 		);
 
-		const shipSucessfullyStored = storePlacementInMap(
+		const shipPlacedInMap = checkPlace_returnStoredShipInMap(
 			placeboard,
 			length,
 			firstBlockCoor,
 			getEndBlockCoor(length, firstBlockCoor, direction)
 		);
 
-		if (!shipSucessfullyStored) return;
+		if (!shipPlacedInMap) return;
 
-		// 2. Render in DOM #placeboard
-		const shipHTMLid = ShipInPboard(length).render(
-			'placeboard',
-			firstBlockCoor[1] * 26,
-			firstBlockCoor[0] * 26
-		);
+		placeboard.drawShip(shipPlacedInMap);
 
-		// 3. Decrement the  ship count in the dock
+		// Decrement the  ship count in the dock
 		const allShipsAreInPboard = Dock().decrementShipCount(length);
 
 		if (allShipsAreInPboard)
 			document.querySelector('#startBtn').disabled = false;
-
-		// 4. Set dataset.coor to blocks of DOM ship
-		setDatasetCoor(shipHTMLid, firstBlockCoor, direction);
-
-		// 5. Link shipInPboard.id -> ship
-		placeboard.ships[shipHTMLid] = shipSucessfullyStored;
-
-		// 6. on double click on ship -> rotate ship
-		document
-			.querySelector('#' + shipHTMLid)
-			.addEventListener('dblclick', rotateShip);
 	}
 
 	if (isShipInPboard) {
@@ -174,7 +191,7 @@ const drop_handler = (ev) => {
 			direction
 		);
 
-		const shipSucessfullyStored = storePlacementInMap(
+		const shipPlacedInMap = checkPlace_returnStoredShipInMap(
 			placeboard,
 			length,
 			firstBlockCoor,
@@ -183,8 +200,8 @@ const drop_handler = (ev) => {
 		);
 
 		// if new placement is wrong -> restore old placement and return
-		if (!shipSucessfullyStored) {
-			storePlacementInMap(
+		if (!shipPlacedInMap) {
+			checkPlace_returnStoredShipInMap(
 				placeboard,
 				length,
 				oldCoor.startCoor,
@@ -220,7 +237,7 @@ function rotateShip() {
 	// store new placement
 	const firstBlockCoor = oldCoor.startCoor;
 
-	const shipSucessfullyStored = storePlacementInMap(
+	const shipPlacedInMap = checkPlace_returnStoredShipInMap(
 		placeboard,
 		length,
 		firstBlockCoor,
@@ -229,8 +246,8 @@ function rotateShip() {
 	);
 
 	// if new placement is wrong -> restore old placement and return
-	if (!shipSucessfullyStored) {
-		storePlacementInMap(
+	if (!shipPlacedInMap) {
+		checkPlace_returnStoredShipInMap(
 			placeboard,
 			length,
 			oldCoor.startCoor,

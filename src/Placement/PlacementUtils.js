@@ -28,8 +28,15 @@ const randomPlaceShips = (gb) => {
 	}
 
 	if (allShipsAreInBoard) {
+		console.log({ ships });
 		for (const ship of ships) {
-			gb.placeShip(ship.length, ship.coor.startCoor, ship.coor.endCoor);
+			if (gb.isPlaceboard) gb.drawShip(ship);
+			else
+				gb.placeShip(
+					ship.length,
+					ship.coor.startCoor,
+					ship.coor.endCoor
+				);
 		}
 	} else randomPlaceShips(gb);
 };
@@ -47,7 +54,7 @@ const randomPlaceShipOfLength = (gb, length, callTimes) => {
 		randomDirection
 	);
 
-	const shipSucessfullyStored = storePlacementInMap(
+	const shipSucessfullyStored = checkPlace_returnStoredShipInMap(
 		gb,
 		length,
 		randomFirstBlockCoor,
@@ -142,7 +149,13 @@ const checkPlacement = (gb, length, startCoor, endCoor) => {
   @startCoor - [y:int,x:int]
   @endCoor - [y:int,x:int]
 */
-const storePlacementInMap = (gb, length, startCoor, endCoor, ship) => {
+const checkPlace_returnStoredShipInMap = (
+	gb,
+	length,
+	startCoor,
+	endCoor,
+	ship
+) => {
 	const isPlacementLegal = checkPlacement(gb, length, startCoor, endCoor);
 
 	if (!isPlacementLegal) {
@@ -175,4 +188,4 @@ const getEndBlockCoor = (length, firstBlockCoor, direction) => {
 	return direction == 'h' ? [y, x + length - 1] : [y + length - 1, x];
 };
 
-export { randomPlaceShips, storePlacementInMap, getEndBlockCoor };
+export { randomPlaceShips, checkPlace_returnStoredShipInMap, getEndBlockCoor };
