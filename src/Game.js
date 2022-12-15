@@ -28,31 +28,6 @@ const makeCpuGameboardClickable = (player, computer) => {
 	});
 };
 
-const start = () => {
-	const playerGb = Gameboard();
-	const computerGb = Gameboard(true);
-
-	playerGb.render('gameboard-player-bx');
-	computerGb.render('gameboard-cmp-bx');
-
-	const player = Player(playerGb, computerGb);
-	const computer = Player(computerGb, playerGb, 1);
-
-	playerGb.placeShip(2, [0, 0], [0, 1]);
-	playerGb.placeShip(3, [0, 3], [2, 3]);
-	playerGb.placeShip(4, [0, 6], [0, 9]);
-	playerGb.placeShip(4, [2, 0], [5, 0]);
-	playerGb.placeShip(3, [2, 5], [2, 7]);
-
-	computerGb.placeShip(2, [0, 0], [0, 1]);
-	computerGb.placeShip(3, [0, 3], [2, 3]);
-	computerGb.placeShip(4, [0, 6], [0, 9]);
-	computerGb.placeShip(4, [2, 0], [5, 0]);
-	computerGb.placeShip(3, [2, 5], [2, 7]);
-
-	makeCpuGameboardClickable(player, computer);
-};
-
 const addEventListenerToResetButton = () => {
 	document.querySelector('#resetBtn').addEventListener('click', () => {
 		Dock().reset();
@@ -103,6 +78,8 @@ const Game = () => {
 	addEventListenerToRandomButton();
 
 	randomPlaceShips(computerGb);
+
+	makeCpuGameboardClickable(player, computer);
 };
 
 export default Game;
