@@ -76,6 +76,8 @@ const addEventListenerToRandomButton = () => {
 	document.querySelector('#randomBtn').addEventListener('click', () => {
 		Placeboard().reset();
 		randomPlaceShips(Placeboard());
+		Dock().disable();
+
 		document.querySelector('#startBtn').disabled = false;
 	});
 };

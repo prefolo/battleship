@@ -86,6 +86,17 @@ const Dock = () => {
 
 			Singleton.render(this.htmlContainerID);
 		},
+
+		disable() {
+			for (const ln_cnt of len_count) {
+				let count = ln_cnt[1];
+				let len = ln_cnt[0];
+
+				for (let i = 0; i < count; i++) {
+					this.decrementShipCount(len);
+				}
+			}
+		},
 	};
 
 	return Singleton;
