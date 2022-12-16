@@ -14,9 +14,11 @@
 	--cpuCell-border-color: rgb(227, 227, 227);
 	--cpuCell-bg-color: #fbfbfb;
 
+	--seaCell-color: #fff;
 	--seaCell-border-color: #fff;
 	--seaCell-bg-color: #ecedff;
 
+	--shipCell-color: #fff;
 	--shipCell-border-color: #656565;
 	--shipCell-bg-color: #a8a8a8;
 
@@ -32,6 +34,34 @@
 	--mainButton-disabled-bg-color: #d6d6d6;
 	--mainButton-disabled-color: #a2a3a3;
 
+	--dock-countBox-color: #a8a8a8;
+}
+
+:root {
+	--page-color: #0074ff;
+	--page-bg-color: #fff;
+	--header-color: #fff;
+	--header-bg-color: #332e29;
+	--content-color: #fff;
+	--content-bg-color: #213d54;
+	--footer-color: #adadad;
+	--footer-bg-color: #2c333b;
+	--cpuCell-border-color: rgb(136, 136, 136);
+	--cpuCell-bg-color: #656565;
+	--seaCell-color: #fff;
+	--seaCell-border-color: #000;
+	--seaCell-bg-color: #40404f;
+	--shipCell-color: #000;
+	--shipCell-border-color: #aaa54a;
+	--shipCell-bg-color: #dce03a;
+	--gameboard-border: 1px solid #cdcdcd;
+	--button-border: 1px solid #ff9fd5;
+	--button-bg-color: #e75eff;
+	--mainButton-border-color: #ffddb3;
+	--mainButton-bg-color: orange;
+	--mainButton-disabled-border-color: #d0d0d0;
+	--mainButton-disabled-bg-color: #d6d6d6;
+	--mainButton-disabled-color: #a2a3a3;
 	--dock-countBox-color: #a8a8a8;
 }
 
@@ -117,13 +147,21 @@ body {
 }
 
 .seaCell {
+	color: var(--seaCell-color);
 	border-color: var(--seaCell-border-color);
 	background-color: var(--seaCell-bg-color);
 }
 
 .shipCell {
+	color: var(--shipCell-color);
 	border-color: var(--shipCell-border-color);
 	background-color: var(--shipCell-bg-color);
+}
+
+.cpuCell.seaCell {
+	color: #fff;
+	border-color: #fff;
+	background-color: grey;
 }
 
 /* Placement */

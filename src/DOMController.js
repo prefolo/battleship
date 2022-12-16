@@ -22,7 +22,7 @@ const markAttackedShip = (msg, { coordinates, gameboard }) => {
 		cellID + coordinates[0] + '-' + coordinates[1]
 	);
 
-	cell.textContent = 'O';
+	cell.textContent = 'X';
 	cell.classList.add('shipCell');
 };
 
