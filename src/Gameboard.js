@@ -1,30 +1,11 @@
 import PubSub from 'pubsub-js';
 import Ship from './Ship';
-import Cell from './Cell';
+import { newMap } from './Placement/PlacementUtils';
 
 const Gameboard = (isComputer = false) => {
-	const map = [
-		new Array(10),
-		new Array(10),
-		new Array(10),
-		new Array(10),
-		new Array(10),
-		new Array(10),
-		new Array(10),
-		new Array(10),
-		new Array(10),
-		new Array(10),
-	];
-
-	for (let i = 0; i < 10; i++) {
-		for (let j = 0; j < 10; j++) {
-			map[i][j] = Cell([i, j]);
-		}
-	}
-
 	const gb = {
 		isComputer,
-		map,
+		map: newMap(),
 		ships: [],
 
 		/*
@@ -92,7 +73,7 @@ const Gameboard = (isComputer = false) => {
 
 	for (let i = 0; i < 10; i++) {
 		for (let j = 0; j < 10; j++) {
-			map[i][j].gameboard = gb;
+			gb.map[i][j].gameboard = gb;
 		}
 	}
 

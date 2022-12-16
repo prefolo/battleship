@@ -1,7 +1,7 @@
 import Dock from './Dock';
 import ShipInPboard from './ShipInPboard';
-import Cell from '../Cell';
 import {
+	newMap,
 	checkPlace_returnStoredShipInMap,
 	getEndBlockCoor,
 } from './PlacementUtils';
@@ -12,28 +12,9 @@ let placeboard = null;
 const Placeboard = () => {
 	if (placeboard) return placeboard;
 
-	const map = [
-		new Array(10),
-		new Array(10),
-		new Array(10),
-		new Array(10),
-		new Array(10),
-		new Array(10),
-		new Array(10),
-		new Array(10),
-		new Array(10),
-		new Array(10),
-	];
-
-	for (let i = 0; i < 10; i++) {
-		for (let j = 0; j < 10; j++) {
-			map[i][j] = Cell([i, j]);
-		}
-	}
-
 	placeboard = {
 		ships: {},
-		map,
+		map: newMap(),
 		isPlaceboard: true,
 
 		render(htmlContainerID) {
@@ -68,26 +49,7 @@ const Placeboard = () => {
 		},
 
 		reset() {
-			const map = [
-				new Array(10),
-				new Array(10),
-				new Array(10),
-				new Array(10),
-				new Array(10),
-				new Array(10),
-				new Array(10),
-				new Array(10),
-				new Array(10),
-				new Array(10),
-			];
-
-			for (let i = 0; i < 10; i++) {
-				for (let j = 0; j < 10; j++) {
-					map[i][j] = Cell([i, j]);
-				}
-			}
-
-			this.map = map;
+			this.map = newMap();
 			this.ships = {};
 			this.render(this.htmlContainerID);
 		},

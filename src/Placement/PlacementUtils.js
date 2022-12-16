@@ -1,4 +1,5 @@
 import Ship from '../Ship';
+import Cell from '../Cell';
 
 let len_count = [
 	[4, 1],
@@ -188,4 +189,32 @@ const getEndBlockCoor = (length, firstBlockCoor, direction) => {
 	return direction == 'h' ? [y, x + length - 1] : [y + length - 1, x];
 };
 
-export { randomPlaceShips, checkPlace_returnStoredShipInMap, getEndBlockCoor };
+const newMap = () => {
+	const map = [
+		new Array(10),
+		new Array(10),
+		new Array(10),
+		new Array(10),
+		new Array(10),
+		new Array(10),
+		new Array(10),
+		new Array(10),
+		new Array(10),
+		new Array(10),
+	];
+
+	for (let i = 0; i < 10; i++) {
+		for (let j = 0; j < 10; j++) {
+			map[i][j] = Cell([i, j]);
+		}
+	}
+
+	return map;
+};
+
+export {
+	randomPlaceShips,
+	checkPlace_returnStoredShipInMap,
+	getEndBlockCoor,
+	newMap,
+};
