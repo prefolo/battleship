@@ -7,19 +7,23 @@ const showDeniedAttackDialog = (msg, coordinates) => {
 };
 
 const markAttackedSea = (msg, { coordinates, gameboard }) => {
-	const cell = gameboard.isComputer ? '#cpuCell' : '#cell';
+	const cellID = gameboard.isComputer ? '#cpuCell' : '#playerCell';
+	const cell = document.querySelector(
+		cellID + coordinates[0] + '-' + coordinates[1]
+	);
 
-	document.querySelector(
-		cell + coordinates[0] + '-' + coordinates[1]
-	).textContent = 'X';
+	cell.textContent = 'X';
+	cell.classList.add('seaCell');
 };
 
 const markAttackedShip = (msg, { coordinates, gameboard }) => {
-	const cell = gameboard.isComputer ? '#cpuCell' : '#cell';
+	const cellID = gameboard.isComputer ? '#cpuCell' : '#playerCell';
+	const cell = document.querySelector(
+		cellID + coordinates[0] + '-' + coordinates[1]
+	);
 
-	document.querySelector(
-		cell + coordinates[0] + '-' + coordinates[1]
-	).textContent = 'O';
+	cell.textContent = 'O';
+	cell.classList.add('shipCell');
 };
 
 const showWrongShipPlacementDialog = (msg, coorPair) => {
@@ -29,6 +33,9 @@ const showWrongShipPlacementDialog = (msg, coorPair) => {
 };
 
 const drawPlacedShip = (msg, data) => {
+	// Comment next line to show cpu ships
+	if (data.gb.isComputer) return;
+
 	const cell = data.gb.isComputer ? '#cpuCell' : '#playerCell';
 
 	for (let i = 0; i < 10; i++) {
