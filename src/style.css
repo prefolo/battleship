@@ -57,9 +57,7 @@ body {
 	padding: 20px;
 }
 
-.cell,
-.cmp-cell {
-	border: 1px solid #ddd;
+.cell {
 	width: 24px;
 	height: 24px;
 	display: flex;
@@ -67,25 +65,27 @@ body {
 	align-items: center;
 }
 
-.playerGbShipCell {
-	border: 1px solid #656565;
+.cpuCell {
+	border: 1px solid rgb(227, 227, 227);
+	background-color: #fbfbfb;
+}
+
+.seaCell {
+	border: 1px solid #fff;
+	background-color: #ecedff;
+}
+
+.shipCell {
+	border-color: #656565;
 	background-color: #a8a8a8;
 }
 
 /* Placement */
 
-#placeboard {
+#pboard-bx,
+#playerboard-bx,
+#cpuboard-bx {
 	border: 1px solid #aaa;
-}
-
-.pboardCell {
-	border: 1px solid #fff;
-	background-color: #ecedff;
-}
-
-.shipBlock {
-	border-color: #656565;
-	background-color: #a8a8a8;
 }
 
 .undraggableDockedShip {

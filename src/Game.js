@@ -6,7 +6,7 @@ import Dock from './Placement/Dock';
 import { randomPlaceShips } from './Placement/PlacementUtils';
 
 const makeCpuGameboardClickable = (player, computer) => {
-	document.querySelectorAll('.cmp-cell').forEach((cell) => {
+	document.querySelectorAll('.cpuCell').forEach((cell) => {
 		cell.addEventListener('click', function () {
 			const coor = this.dataset.coor.split(',');
 
@@ -68,8 +68,8 @@ const Game = () => {
 	const playerGb = Gameboard();
 	const computerGb = Gameboard(true);
 
-	playerGb.render('gameboard-player-bx');
-	computerGb.render('gameboard-cmp-bx');
+	playerGb.render('playerboard-bx');
+	computerGb.render('cpuboard-bx');
 
 	const player = Player(playerGb, computerGb);
 	const computer = Player(computerGb, playerGb, 1);

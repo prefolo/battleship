@@ -24,7 +24,7 @@ const ShipInPboard = (length) => {
 
 				block.style =
 					'width:24px;height:24px;border-width:1px;border-style:solid';
-				block.className = 'shipBlock';
+				block.className = 'shipCell';
 
 				frame.appendChild(block);
 				length--;

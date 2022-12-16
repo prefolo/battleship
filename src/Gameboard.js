@@ -49,7 +49,11 @@ const Gameboard = (isComputer = false) => {
 			const container = document.querySelector(`#${htmlContainerID}`);
 			container.innerHTML = '';
 
-			const cellClass = this.isComputer ? 'cmp-cell' : 'cell';
+			const cellClass = this.isComputer
+				? 'cell cpuCell'
+				: 'cell playerCell seaCell';
+
+			const id = this.isComputer ? 'cpuCell' : 'playerCell';
 
 			for (let i = 0; i < 10; i++) {
 				const row = document.createElement('div');
@@ -58,7 +62,7 @@ const Gameboard = (isComputer = false) => {
 					const cell = document.createElement('div');
 
 					cell.className = cellClass;
-					cell.id = `${cellClass}${i}-${j}`;
+					cell.id = `${id}${i}-${j}`;
 					cell.dataset.coor = `${i},${j}`;
 
 					row.appendChild(cell);

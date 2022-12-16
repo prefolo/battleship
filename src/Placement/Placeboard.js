@@ -36,7 +36,7 @@ const Placeboard = () => {
 				for (let j = 0; j < 10; j++) {
 					const cell = document.createElement('div');
 
-					cell.className = 'cell pboardCell';
+					cell.className = 'cell pboardCell seaCell';
 					cell.dataset.coor = `${j},${i}`;
 
 					row.appendChild(cell);
@@ -188,7 +188,6 @@ const drop_handler = (ev) => {
 function rotateShip() {
 	const ship = SingletonPboard.ships[this.id];
 	const oldCoor = ship.coor;
-	const grabbedBlockIndex = 0;
 	const length = ship.length;
 	const newDirection = this.style.display == 'block' ? 'h' : 'v';
 
