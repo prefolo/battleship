@@ -1,3 +1,40 @@
+:root {
+	--page-color: #000;
+	--page-bg-color: #fff;
+
+	--header-color: #000;
+	--header-bg-color: #fff;
+
+	--content-color: #000;
+	--content-bg-color: #fff;
+
+	--footer-color: #000;
+	--footer-bg-color: #fff;
+
+	--cpuCell-border-color: rgb(227, 227, 227);
+	--cpuCell-bg-color: #fbfbfb;
+
+	--seaCell-border-color: #fff;
+	--seaCell-bg-color: #ecedff;
+
+	--shipCell-border-color: #656565;
+	--shipCell-bg-color: #a8a8a8;
+
+	--gameboard-border: 1px solid #aaa;
+
+	--button-border: 1px solid #5276ad;
+	--button-bg-color: #53637c;
+
+	--mainButton-border-color: #ff8f00;
+	--mainButton-bg-color: orange;
+
+	--mainButton-disabled-border-color: #d0d0d0;
+	--mainButton-disabled-bg-color: #d6d6d6;
+	--mainButton-disabled-color: #a2a3a3;
+
+	--dock-countBox-color: #a8a8a8;
+}
+
 * {
 	padding: 0;
 	margin: 0;
@@ -10,6 +47,8 @@ body {
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
+	color: var(--page-color);
+	background-color: var(--page-bg-color);
 }
 
 #header {
@@ -17,6 +56,8 @@ body {
 	justify-content: center;
 	align-items: center;
 	padding: 20px;
+	color: var(--header-color);
+	background-color: var(--header-bg-color);
 }
 
 #content {
@@ -26,6 +67,8 @@ body {
 
 	display: flex;
 	flex-direction: column;
+	color: var(--content-color);
+	background-color: var(--content-bg-color);
 }
 
 #footer {
@@ -33,6 +76,8 @@ body {
 	justify-content: center;
 	align-items: center;
 	padding: 20px;
+	color: var(--footer-color);
+	background-color: var(--footer-bg-color);
 }
 
 /* Screens */
@@ -58,6 +103,7 @@ body {
 }
 
 .cell {
+	border: 1px solid #000;
 	width: 24px;
 	height: 24px;
 	display: flex;
@@ -66,18 +112,18 @@ body {
 }
 
 .cpuCell {
-	border: 1px solid rgb(227, 227, 227);
-	background-color: #fbfbfb;
+	border-color: var(--cpuCell-border-color);
+	background-color: var(--cpuCell-bg-color);
 }
 
 .seaCell {
-	border: 1px solid #fff;
-	background-color: #ecedff;
+	border-color: var(--seaCell-border-color);
+	background-color: var(--seaCell-bg-color);
 }
 
 .shipCell {
-	border-color: #656565;
-	background-color: #a8a8a8;
+	border-color: var(--shipCell-border-color);
+	background-color: var(--shipCell-bg-color);
 }
 
 /* Placement */
@@ -85,7 +131,7 @@ body {
 #pboard-bx,
 #playerboard-bx,
 #cpuboard-bx {
-	border: 1px solid #aaa;
+	border: var(--gameboard-border);
 }
 
 .undraggableDockedShip {
@@ -93,7 +139,7 @@ body {
 }
 
 .dockCountBox {
-	color: #a8a8a8;
+	color: var(--dock-countBox-color);
 	width: 30px;
 }
 
@@ -105,24 +151,24 @@ body {
 }
 
 button {
-	background-color: #53637c;
+	background-color: var(--button-bg-color);
 	appearance: none;
 	padding: 5px 28px;
 	font-size: 15px;
 	border-radius: 3px;
-	border: 1px solid #5276ad;
+	border: var(--button-border);
 	color: #fff;
 	cursor: pointer;
 }
 
-#startBtn {
-	background-color: orange;
-	border-color: rgb(231, 161, 33);
+.mainButton {
+	background-color: var(--mainButton-bg-color);
+	border-color: var(--mainButton-border-color);
 }
 
-#startBtn:disabled {
-	background-color: #d6d6d6;
-	border: 1px solid #d0d0d0;
-	color: #a2a3a3;
+.mainButton:disabled {
+	background-color: var(--mainButton-disabled-bg-color);
+	border-color: var(--mainButton-disabled-border-color);
+	color: var(--mainButton-disabled-color);
 	cursor: default;
 }
