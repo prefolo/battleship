@@ -6,7 +6,16 @@
         <script src="bundle.js" defer></script>
     </head>
     <body>
-        <div id="header">Battleship</div>
+        <div id="header">Battleship
+            <div class="theme-switch-wrapper">
+                <em class="switch-left-label">Light</em>
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round"></div>
+                </label>
+                <em class="switch-right-label">Dark</em>
+            </div>
+        </div>
         <div id="content">
             <div class="screen" id="game-screen">
                 <div id="computer-bx">
