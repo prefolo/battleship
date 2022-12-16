@@ -249,6 +249,15 @@ input:checked + .slider:before {
 	background-color: var(--cpuSeaCell-bg-color);
 }
 
+#gamescreen-button-bx{
+	height: 40px;
+	text-align: center;
+	margin-top: 30px;
+}
+
+#playagainBtn{
+	display:none;
+}
 /* Placement */
 
 #pboard-bx,

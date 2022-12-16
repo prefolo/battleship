@@ -22,6 +22,7 @@ const makeCpuGameboardClickable = (player, computer) => {
 
 			if (player.gameboard.allShipsHaveBeenSunk()) {
 				PubSub.publish('Computer won', {});
+				document.querySelector('#playagainBtn').style.display = 'block';
 				return;
 			}
 		});
@@ -47,7 +48,7 @@ const addEventListenerToStartButton = (gb) => {
 	
 
 	document.querySelector('#placement-screen').style.display='none';
-	document.querySelector('#game-screen').style.display='flex';
+	document.querySelector('#game-screen').style.display='block';
 });
 };
 
