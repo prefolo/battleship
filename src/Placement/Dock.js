@@ -8,12 +8,12 @@ let len_count = [
 ];
 
 // Singleton Pattern
-let Singleton = null;
+let SingletonDock = null;
 
 const Dock = () => {
-	if (Singleton) return Singleton;
+	if (SingletonDock) return SingletonDock;
 
-	Singleton = {
+	SingletonDock = {
 		htmlContainerID: null,
 
 		render(htmlContainerID) {
@@ -81,10 +81,10 @@ const Dock = () => {
 				[4, 1],
 				[3, 2],
 				[2, 3],
-				[1, 4],
+				[1, 3],
 			];
 
-			Singleton.render(this.htmlContainerID);
+			this.render(this.htmlContainerID);
 		},
 
 		disable() {
@@ -99,7 +99,7 @@ const Dock = () => {
 		},
 	};
 
-	return Singleton;
+	return SingletonDock;
 };
 
 export default Dock;

@@ -7,12 +7,12 @@ import {
 } from './PlacementUtils';
 
 // Singleton Pattern
-let placeboard = null;
+let SingletonPboard = null;
 
 const Placeboard = () => {
-	if (placeboard) return placeboard;
+	if (SingletonPboard) return SingletonPboard;
 
-	placeboard = {
+	SingletonPboard = {
 		ships: {},
 		map: newMap(),
 		isPlaceboard: true,
@@ -83,7 +83,7 @@ const Placeboard = () => {
 			setDatasetCoor(shipHTMLid, startCoor, direction);
 
 			// 3. Link shipInPboard.id -> ship
-			placeboard.ships[shipHTMLid] = ship;
+			this.ships[shipHTMLid] = ship;
 
 			// 4. on double click on ship -> rotate ship
 			document
@@ -92,7 +92,7 @@ const Placeboard = () => {
 		},
 	};
 
-	return placeboard;
+	return SingletonPboard;
 };
 
 const dragover_handler = (ev) => {
@@ -123,7 +123,7 @@ const drop_handler = (ev) => {
 		);
 
 		const shipPlacedInMap = checkPlace_returnStoredShipInMap(
-			placeboard,
+			SingletonPboard,
 			length,
 			firstBlockCoor,
 			getEndBlockCoor(length, firstBlockCoor, direction)
@@ -131,9 +131,9 @@ const drop_handler = (ev) => {
 
 		if (!shipPlacedInMap) return;
 
-		placeboard.drawShip(shipPlacedInMap);
+		SingletonPboard.drawShip(shipPlacedInMap);
 
-		// Decrement the  ship count in the dock
+		// Decrement the ship count in the dock
 		const allShipsAreInPboard = Dock().decrementShipCount(length);
 
 		if (allShipsAreInPboard)
@@ -141,7 +141,7 @@ const drop_handler = (ev) => {
 	}
 
 	if (isShipInPboard) {
-		const ship = placeboard.ships[id];
+		const ship = SingletonPboard.ships[id];
 		const oldCoor = ship.coor;
 
 		removeShipFromMap(ship);
@@ -154,7 +154,7 @@ const drop_handler = (ev) => {
 		);
 
 		const shipPlacedInMap = checkPlace_returnStoredShipInMap(
-			placeboard,
+			SingletonPboard,
 			length,
 			firstBlockCoor,
 			getEndBlockCoor(length, firstBlockCoor, direction),
@@ -164,7 +164,7 @@ const drop_handler = (ev) => {
 		// if new placement is wrong -> restore old placement and return
 		if (!shipPlacedInMap) {
 			checkPlace_returnStoredShipInMap(
-				placeboard,
+				SingletonPboard,
 				length,
 				oldCoor.startCoor,
 				oldCoor.endCoor,
@@ -186,13 +186,11 @@ const drop_handler = (ev) => {
 };
 
 function rotateShip() {
-	const ship = placeboard.ships[this.id];
+	const ship = SingletonPboard.ships[this.id];
 	const oldCoor = ship.coor;
 	const grabbedBlockIndex = 0;
 	const length = ship.length;
-
-	let direction = 'v';
-	if (this.style.display == 'block') direction = 'h';
+	const newDirection = this.style.display == 'block' ? 'h' : 'v';
 
 	removeShipFromMap(ship);
 
@@ -200,17 +198,17 @@ function rotateShip() {
 	const firstBlockCoor = oldCoor.startCoor;
 
 	const shipPlacedInMap = checkPlace_returnStoredShipInMap(
-		placeboard,
+		SingletonPboard,
 		length,
 		firstBlockCoor,
-		getEndBlockCoor(length, firstBlockCoor, direction),
+		getEndBlockCoor(length, firstBlockCoor, newDirection),
 		ship
 	);
 
 	// if new placement is wrong -> restore old placement and return
 	if (!shipPlacedInMap) {
 		checkPlace_returnStoredShipInMap(
-			placeboard,
+			SingletonPboard,
 			length,
 			oldCoor.startCoor,
 			oldCoor.endCoor,
@@ -219,12 +217,12 @@ function rotateShip() {
 		return;
 	}
 
-	// if new placement is ok -> set new direction of the ship in the grid DOM
+	// if new placement is ok -> set new ndirection of the ship in the grid DOM
 
-	this.style.display = direction == 'h' ? 'flex' : 'block';
+	this.style.display = newDirection == 'h' ? 'flex' : 'block';
 
 	// Set dataset.coor to blocks of DOM ship
-	setDatasetCoor(this.id, firstBlockCoor, direction);
+	setDatasetCoor(this.id, firstBlockCoor, newDirection);
 }
 
 const setDatasetCoor = (id, startCoor, direction) => {
@@ -251,7 +249,7 @@ const getFirstBlockCoor = (cellRecevingDrop, grabbedBlockIndex, direction) => {
 const removeShipFromMap = (ship) => {
 	for (let i = 0; i < 10; i++) {
 		for (let j = 0; j < 10; j++) {
-			placeboard.map[i][j].removeShip(ship);
+			SingletonPboard.map[i][j].removeShip(ship);
 		}
 	}
 };

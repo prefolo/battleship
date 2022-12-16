@@ -8,22 +8,20 @@ const Gameboard = (isComputer = false) => {
 		map: newMap(),
 		ships: [],
 
-		/*
-		  @startCoor - [y:int,x:int]
-		  @endCoor - [y:int,x:int]
-		*/
+		//  @startCoor - [y:int,x:int]
+		//  @endCoor - [y:int,x:int]
 		placeShip(length, startCoor, endCoor) {
 			const ship = Ship(length);
 
 			// startX == endX => vertical position
 			if (startCoor[0] == endCoor[0]) {
-				for (let i = 0; i < ship.length; i++) {
+				for (let i = 0; i < length; i++) {
 					this.map[startCoor[0]][startCoor[1] + i].setShip(ship);
 				}
 			}
 			// startY == endY => horizontal position
 			else if (startCoor[1] == endCoor[1]) {
-				for (let i = 0; i < ship.length; i++) {
+				for (let i = 0; i < length; i++) {
 					this.map[startCoor[0] + i][startCoor[1]].setShip(ship);
 				}
 			}
