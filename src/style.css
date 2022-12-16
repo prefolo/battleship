@@ -22,6 +22,10 @@
 	--shipCell-border-color: #656565;
 	--shipCell-bg-color: #a8a8a8;
 
+	--cpuSeaCell-color: #000;
+	--cpuSeaCell-border-color: rgb(227,227,227);
+	--cpuSeaCell-bg-color: #fbfbfb;
+
 	--gameboard-border: 1px solid #aaa;
 
 	--button-border: 1px solid #5276ad;
@@ -56,6 +60,9 @@
 	--shipCell-color: #000;
 	--shipCell-border-color: #aaa54a;
 	--shipCell-bg-color: #dce03a;
+	--cpuSeaCell-color: #fff;
+	--cpuSeaCell-border-color: rgb(136,136,136);
+	--cpuSeaCell-bg-color: #656565;
 	--gameboard-border: 1px solid #cdcdcd;
 	--button-border: 1px solid #ff9fd5;
 	--button-bg-color: #e75eff;
@@ -202,6 +209,9 @@ input:checked + .slider:before {
 
 /* Game */
 
+#game-screen{
+	display: none;
+}
 .title {
 	text-align: center;
 	padding: 20px;
@@ -234,9 +244,9 @@ input:checked + .slider:before {
 }
 
 .cpuCell.seaCell {
-	color: #fff;
-	border-color: #fff;
-	background-color: grey;
+	color: var(--cpuSeaCell-color);
+	border-color: var(--cpuSeaCell-border-color);
+	background-color: var(--cpuSeaCell-bg-color);
 }
 
 /* Placement */

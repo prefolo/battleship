@@ -44,7 +44,11 @@ const addEventListenerToStartButton = (gb) => {
 		Placeboard().reset();
 
 		document.querySelector('#startBtn').disabled = true;
-	});
+	
+
+	document.querySelector('#placement-screen').style.display='none';
+	document.querySelector('#game-screen').style.display='flex';
+});
 };
 
 const addEventListenerToRandomButton = () => {
