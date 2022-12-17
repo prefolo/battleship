@@ -1,12 +1,8 @@
 import Ship from '../Ship';
 import Cell from '../Cell';
+import { getShipsLenght_Count } from '../shipsLength_Count';
 
-let len_count = [
-	[4, 1],
-	[3, 2],
-	[2, 3],
-	[1, 3],
-];
+let len_count = getShipsLenght_Count();
 
 const randomPlaceShips = (gb) => {
 	let ships = [];
