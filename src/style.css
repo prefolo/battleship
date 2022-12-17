@@ -31,8 +31,14 @@
 	--button-border: 1px solid #5276ad;
 	--button-bg-color: #53637c;
 
+	--button-pressed-bg-color: rgb(50, 62, 66);
+	--button-pressed-border-color: black;
+
 	--mainButton-border-color: #ff8f00;
 	--mainButton-bg-color: orange;
+
+	--mainButton-pressed-bg-color: rgb(255, 111, 0);
+	--mainButton-pressed-border-color: #ff8f00;
 
 	--mainButton-disabled-border-color: #d0d0d0;
 	--mainButton-disabled-bg-color: #d6d6d6;
@@ -66,8 +72,12 @@
 	--gameboard-border: 1px solid #cdcdcd;
 	--button-border: 1px solid #ff9fd5;
 	--button-bg-color: #e75eff;
+	--button-pressed-bg-color: #b549c8;
+	--button-pressed-border-color: #b8749a;
 	--mainButton-border-color: #ffddb3;
 	--mainButton-bg-color: orange;
+	--mainButton-pressed-bg-color: rgb(255, 111, 0);
+	--mainButton-pressed-border-color: #ff8f00;
 	--mainButton-disabled-border-color: #d0d0d0;
 	--mainButton-disabled-bg-color: #d6d6d6;
 	--mainButton-disabled-color: #a2a3a3;
@@ -306,6 +316,11 @@ button {
 	cursor: pointer;
 }
 
+button:active {
+	background-color: var(--button-pressed-bg-color);
+	border-color: var(--button-pressed-border-color);
+}
+
 .mainButton {
 	background-color: var(--mainButton-bg-color);
 	border-color: var(--mainButton-border-color);
@@ -316,4 +331,9 @@ button {
 	border-color: var(--mainButton-disabled-border-color);
 	color: var(--mainButton-disabled-color);
 	cursor: default;
+}
+
+.mainButton:active {
+	background-color: var(--mainButton-pressed-bg-color);
+	border-color: var(--mainButton-pressed-border-color);
 }
