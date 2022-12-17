@@ -14,7 +14,7 @@
 	--cpuCell-border-color: rgb(227, 227, 227);
 	--cpuCell-bg-color: #fbfbfb;
 
-	--seaCell-color: #fff;
+	--seaCell-color: #000;
 	--seaCell-border-color: #fff;
 	--seaCell-bg-color: #ecedff;
 
@@ -23,7 +23,7 @@
 	--shipCell-bg-color: #a8a8a8;
 
 	--cpuSeaCell-color: #000;
-	--cpuSeaCell-border-color: rgb(227,227,227);
+	--cpuSeaCell-border-color: rgb(227, 227, 227);
 	--cpuSeaCell-bg-color: #fbfbfb;
 
 	--gameboard-border: 1px solid #aaa;
@@ -61,7 +61,7 @@
 	--shipCell-border-color: #aaa54a;
 	--shipCell-bg-color: #dce03a;
 	--cpuSeaCell-color: #fff;
-	--cpuSeaCell-border-color: rgb(136,136,136);
+	--cpuSeaCell-border-color: rgb(136, 136, 136);
 	--cpuSeaCell-bg-color: #656565;
 	--gameboard-border: 1px solid #cdcdcd;
 	--button-border: 1px solid #ff9fd5;
@@ -209,7 +209,7 @@ input:checked + .slider:before {
 
 /* Game */
 
-#game-screen{
+#game-screen {
 	display: none;
 }
 .title {
@@ -249,14 +249,14 @@ input:checked + .slider:before {
 	background-color: var(--cpuSeaCell-bg-color);
 }
 
-#gamescreen-button-bx{
+#gamescreen-button-bx {
 	height: 40px;
 	text-align: center;
 	margin-top: 30px;
 }
 
-#playagainBtn{
-	display:none;
+#playagainBtn {
+	display: none;
 }
 /* Placement */
 
@@ -266,14 +266,14 @@ input:checked + .slider:before {
 	border: var(--gameboard-border);
 }
 
-#placement-title{
+#placement-title {
 	text-align: center;
 	margin-bottom: 6px;
 	font-size: 18px;
 }
 
-#placement-details{
-	color:#999;
+#placement-details {
+	color: #999;
 	text-align: center;
 	margin-bottom: 56px;
 	font-size: 14px;
