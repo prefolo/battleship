@@ -5,7 +5,7 @@ import Placeboard from './Placement/Placeboard';
 import Dock from './Placement/Dock';
 import { randomPlaceShips } from './Placement/PlacementUtils';
 
-const makeCpuGameboardClickable = (player, computer) => {
+/* const makeCpuGameboardClickable = (player, computer) => {
 	document.querySelectorAll('.cpuCell').forEach((cell) => {
 		cell.addEventListener('click', function () {
 			const coor = this.dataset.coor.split(',');
@@ -27,6 +27,30 @@ const makeCpuGameboardClickable = (player, computer) => {
 			}
 		});
 	});
+}; */
+
+const makeCpuGameboardClickable = (player, computer) => {
+	document
+		.querySelector('#cpuboard-bx')
+		.addEventListener('click', function (ev) {
+			const coor = ev.target.dataset.coor.split(',');
+
+			const thisCellIsYetHit = player.attack(coor[0], coor[1]);
+			if (thisCellIsYetHit) return;
+
+			if (computer.gameboard.allShipsHaveBeenSunk()) {
+				PubSub.publish('Player won', {});
+				return;
+			}
+
+			computer.attack();
+
+			if (player.gameboard.allShipsHaveBeenSunk()) {
+				PubSub.publish('Computer won', {});
+				document.querySelector('#playagainBtn').style.display = 'block';
+				return;
+			}
+		});
 };
 
 const addEventListenerToResetButton = () => {
@@ -45,11 +69,10 @@ const addEventListenerToStartButton = (gb) => {
 		Placeboard().reset();
 
 		document.querySelector('#startBtn').disabled = true;
-	
 
-	document.querySelector('#placement-screen').style.display='none';
-	document.querySelector('#game-screen').style.display='block';
-});
+		document.querySelector('#placement-screen').style.display = 'none';
+		document.querySelector('#game-screen').style.display = 'block';
+	});
 };
 
 const addEventListenerToRandomButton = () => {
