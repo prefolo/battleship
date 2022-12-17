@@ -49,6 +49,8 @@ const Gameboard = (isComputer = false) => {
 			const container = document.querySelector(`#${htmlContainerID}`);
 			container.innerHTML = '';
 
+			this.htmlContainerID = container.id;
+
 			const cellClass = this.isComputer
 				? 'cell cpuCell'
 				: 'cell playerCell seaCell';
@@ -69,6 +71,18 @@ const Gameboard = (isComputer = false) => {
 				}
 
 				container.appendChild(row);
+			}
+		},
+
+		reset() {
+			this.map = newMap();
+			this.ships = [];
+			this.render(this.htmlContainerID);
+
+			for (let i = 0; i < 10; i++) {
+				for (let j = 0; j < 10; j++) {
+					this.map[i][j].gameboard = this;
+				}
 			}
 		},
 	};
