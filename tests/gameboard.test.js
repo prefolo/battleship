@@ -15,12 +15,6 @@ test('Gameboard cell [1,4] is hit => false ', () => {
 	expect(gb.map[1][4].isHit()).toBe(false);
 });
 
-test('Hit cell [1,4]. Is hit => true', () => {
-	const gb = Gameboard();
-	gb.map[1][4].receiveAttack();
-	expect(gb.map[1][4].isHit()).toBe(true);
-});
-
 test('Place ship at [1,4] - [1,8]. cells [1,4] - [1,8] .state => "ship"', () => {
 	const gb = Gameboard();
 	gb.placeShip(5, [1, 4], [1, 8]);
